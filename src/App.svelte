@@ -2,6 +2,7 @@
 	import { dndzone } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 
+	let isNewTab = false;
 	let searchHistory;
 	let searchQuery;
 
@@ -39,7 +40,13 @@
 		}
 
 		appendToSearchHistory(searchQuery);
-		window.location.href = `https://google.com/search?q=${searchQuery}`;
+		const url = `https://google.com/search?q=${searchQuery}`;
+
+		if (isNewTab) {
+			window.open(url);
+		} else {
+			window.location.href = url;
+		}
 	}
 
 	function updateSearchHistory() {
@@ -55,6 +62,10 @@
 	<button on:click={searchClick}>検索</button>
 	<button on:click={resetClick}>リセット</button>
 	<button on:click={resetHistoryClick}>履歴をリセット</button>
+	<label>
+		新しいタブで開く
+		<input bind:checked={isNewTab} type="checkbox" />
+	</label>
 	<ul>
 		{#each searchHistory as searchQuery}
 			<li>{searchQuery}</li>
