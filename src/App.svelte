@@ -2,6 +2,7 @@
 	import { dndzone } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 
+	let IsEmptyInputAfterSearch = false;
 	let isNewTab = false;
 	let searchHistory;
 	let searchQuery;
@@ -56,6 +57,10 @@
 			window.location.href = url;
 		}
 
+		if (IsEmptyInputAfterSearch) {
+			searchQuery = "";
+		}
+
 		updateSearchHistory();
 	}
 
@@ -75,6 +80,10 @@
 	<label>
 		新しいタブで開く
 		<input bind:checked={isNewTab} type="checkbox" />
+	</label>
+	<label>
+		検索後に検索ボックスを空にする
+		<input bind:checked={IsEmptyInputAfterSearch} type="checkbox" />
 	</label>
 	<ul>
 		{#each searchHistory as searchQuery}
