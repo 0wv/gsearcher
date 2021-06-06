@@ -24,6 +24,14 @@
 		localStorage.setItem("searchHistory", JSON.stringify([]));
 	}
 
+	function inputKeypress(event) {
+		if (event.charCode !== 13) {
+			return;
+		}
+
+		searchClick();
+	}
+
 	function resetClick() {
 		searchQuery = "";
 	}
@@ -60,7 +68,7 @@
 </script>
 
 <main>
-	<input bind:value={searchQuery} type="text" />
+	<input bind:value={searchQuery} on:keypress={inputKeypress} type="text" />
 	<button on:click={searchClick}>検索</button>
 	<button on:click={resetClick}>リセット</button>
 	<button on:click={resetHistoryClick}>履歴をリセット</button>
