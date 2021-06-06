@@ -70,7 +70,14 @@
 	</label>
 	<ul>
 		{#each searchHistory as searchQuery}
-			<li>{searchQuery}</li>
+			<li>
+				<!-- svelte-ignore a11y-invalid-attribute -->
+				<a
+					href="javascript:void(0)"
+					onclick={`window.open('https://google.com/search?q=${searchQuery}')`}
+					>{searchQuery}</a
+				>
+			</li>
 		{/each}
 	</ul>
 </main>
