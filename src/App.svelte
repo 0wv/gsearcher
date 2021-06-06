@@ -47,6 +47,8 @@
 		} else {
 			window.location.href = url;
 		}
+
+		updateSearchHistory();
 	}
 
 	function updateSearchHistory() {
