@@ -2,6 +2,7 @@
 	import { dndzone } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 
+	let searchHistory;
 	let searchQuery;
 
 	function appendToSearchHistory(searchQuery) {
@@ -26,6 +27,12 @@
 		searchQuery = "";
 	}
 
+	function resetHistoryClick() {
+		localStorage.removeItem("searchHistory");
+		initializeSearchHistory();
+		updateSearchHistory();
+	}
+
 	function searchClick() {
 		if (searchQuery === "") {
 			return;
@@ -35,15 +42,21 @@
 		window.location.href = `https://google.com/search?q=${searchQuery}`;
 	}
 
+	function updateSearchHistory() {
+		searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+	}
+
 	initializeSearchHistory();
+	updateSearchHistory();
 </script>
 
 <main>
 	<input bind:value={searchQuery} type="text" />
 	<button on:click={searchClick}>検索</button>
 	<button on:click={resetClick}>リセット</button>
+	<button on:click={resetHistoryClick}>履歴をリセット</button>
 	<ul>
-		{#each JSON.parse(localStorage.getItem("searchHistory")) as searchQuery}
+		{#each searchHistory as searchQuery}
 			<li>{searchQuery}</li>
 		{/each}
 	</ul>
